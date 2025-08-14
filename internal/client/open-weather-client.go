@@ -3,8 +3,11 @@ package client
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"net/url"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -33,9 +36,38 @@ func NewAPIClient() *OpenWeatherAPIClient {
 }
 
 func (c *OpenWeatherAPIClient) FetchLocation(city, state, country string) ([]byte, error) {
+	cityEsc := url.QueryEscape(city)
+	stateEsc := url.QueryEscape(state)
+	countryEsc := url.QueryEscape(country)
+
 	url := fmt.Sprintf(
-		"%s/geo/1.0/direct?q=%s,%s,%s&limit=10&appid=%s", c.BaseURL, city, state, country, c.APIKey,
+		"%s/geo/1.0/direct?q=%s,%s,%s&limit=10&appid=%s", c.BaseURL, cityEsc, stateEsc, countryEsc, c.APIKey,
 	)
+
+	logURL := strings.Replace(url, c.APIKey, "***", 1)
+	log.Printf("Fetching location: %s", logURL)
+
+	resp, err := c.Client.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("OpenWeatherMap API returned status %d", resp.StatusCode)
+	}
+
+	return io.ReadAll(resp.Body)
+}
+
+func (c *OpenWeatherAPIClient) FetchTemperature(lat, lon float64) ([]byte, error) {
+	url := fmt.Sprintf(
+		"%s/data/2.5/weather?lat=%f&lon=%f&appid=%s",
+		c.BaseURL, lat, lon, c.APIKey,
+	)
+
+	logURL := strings.Replace(url, c.APIKey, "***", 1)
+	log.Printf("Fetching temperature: %s", logURL)
 
 	resp, err := c.Client.Get(url)
 	if err != nil {
