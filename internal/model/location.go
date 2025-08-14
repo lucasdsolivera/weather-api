@@ -1,0 +1,9 @@
+package model
+
+type Location struct {
+	Lat     float64 `json:"lat"`
+	Lon     float64 `json:"lon"`
+	City    string  `json:"name"`
+	State   string  `json:"state"`
+	Country string  `json:"country"`
+}
