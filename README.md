@@ -21,7 +21,7 @@ Fetches the current temperature for a specific location.
 **💻 Example Request:**
 
 ```bash
-curl "https://railway/retrieve-temperature?city=sao paulo&state=SP&country=BR"
+curl "https://weather-api-production-944e.up.railway.app/retrieve-temperature?city=sao paulo&state=SP&country=BR"
 ```
 
 **🌡️ Example Response:**
