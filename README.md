@@ -78,4 +78,4 @@ Error: OpenWeatherMap API unreachable
 * `state` and `country` are optional;
 * `curl` is the easiest way to test your API from the terminal. 🖥️
 * Use the `run.sh` script to run the API quickly. 🚀 (api key is required)
-* All temperature values are rounded to **2 decimal places**. 🔢
+* All temperature values are rounded to **2 decimal points**. 🔢
