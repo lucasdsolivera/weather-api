@@ -14,17 +14,25 @@ Fetches the current temperature for a specific location.
 
 | Parameter | Description                 | Required |
 | --------- | --------------------------- | -------- |
-| city      | Name of the city            | No       |
+| city      | Name of the city            | Yes      |
 | state     | State or region of the city | No       |
 | country   | Country code (e.g., BR)     | No       |
 
-**💻 Example Request:**
+**💻 Request Examples:**
+
+```bash
+curl "https://weather-api-production-944e.up.railway.app/retrieve-temperature?city=sao paulo"
+```
+
+```bash
+curl "https://weather-api-production-944e.up.railway.app/retrieve-temperature?city=sao paulo&state=SP"
+```
 
 ```bash
 curl "https://weather-api-production-944e.up.railway.app/retrieve-temperature?city=sao paulo&state=SP&country=BR"
 ```
 
-**🌡️ Example Response:**
+**🌡️ Response Example:**
 
 ```json
 {
@@ -67,7 +75,7 @@ Error: OpenWeatherMap API unreachable
 
 ## 📄 Notes
 
-* `city`,`state` and `country` are optional; you can query by any of them.
+* `state` and `country` are optional;
 * `curl` is the easiest way to test your API from the terminal. 🖥️
 * Use the `run.sh` script to run the API quickly. 🚀 (api key is required)
 * All temperature values are rounded to **2 decimal places**. 🔢
