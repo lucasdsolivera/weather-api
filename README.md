@@ -47,12 +47,12 @@ curl "https://weather-api-production-944e.up.railway.app/retrieve-temperature?ci
 
 ## ⚠️ Error Handling
 
-If something goes wrong with the external API or the request, the server responds with the proper HTTP status code and a short message.
+If something goes wrong with the external API or the request, the server responds with the proper HTTP status code but error message only when its a Internal Server Error.
 
-| Status Code | Meaning                       | Emoji |
+| Status Code | Meaning                       |       |  
 | ----------- | ----------------------------- | ----- |
 | 500         | Internal Server Error         | ❌    |
-| 404         | Location Not Found (optional) | 🛑    |
+| 404         | Location Not Found (optional) | ❌    |
 
 **💻 Example Error Response (500):**
 
@@ -69,5 +69,5 @@ Error: OpenWeatherMap API unreachable
 
 * `city`,`state` and `country` are optional; you can query by any of them.
 * `curl` is the easiest way to test your API from the terminal. 🖥️
-* Use the `run.sh` script to run the API quickly. 🚀
+* Use the `run.sh` script to run the API quickly. 🚀 (api key is required)
 * All temperature values are rounded to **2 decimal places**. 🔢
