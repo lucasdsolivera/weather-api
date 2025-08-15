@@ -2,7 +2,7 @@ package util
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 
 	"github.com/lucasdsolivera/weather-api/internal/model"
 )
@@ -10,6 +10,8 @@ import (
 type mainData struct {
 	Temp float64 `json:"temp"`
 }
+
+var ErrLocationNotFound = errors.New("location not found")
 
 func ParseTemperature(data []byte, err error) (*model.Temperature, error) {
 	if err != nil {
@@ -24,7 +26,7 @@ func ParseTemperature(data []byte, err error) (*model.Temperature, error) {
 		return nil, err
 	}
 
-	c, f := convertTemperature(result.Main.Temp)
+	c, f := ConvertTemperature(result.Main.Temp)
 
 	return &model.Temperature{
 		Kelvin:     result.Main.Temp,
@@ -44,7 +46,7 @@ func ParseFirstLocation(data []byte, err error) (*model.Location, error) {
 	}
 
 	if len(results) == 0 {
-		return nil, fmt.Errorf("location not found")
+		return nil, ErrLocationNotFound
 	}
 
 	return &results[0], nil

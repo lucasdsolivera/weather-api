@@ -7,7 +7,7 @@ func round(value float64, places int) float64 {
 	return math.Round(value*factor) / factor
 }
 
-func convertTemperature(k float64) (c, f float64) {
+func ConvertTemperature(k float64) (c, f float64) {
 	c = round(k-273.15, 2)
 	f = round((k-273.15)*9/5+32, 2)
 	return

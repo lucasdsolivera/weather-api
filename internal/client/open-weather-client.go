@@ -11,6 +11,11 @@ import (
 	"time"
 )
 
+type WeatherAPI interface {
+	FetchLocation(city, state, country string) ([]byte, error)
+	FetchTemperature(lat, lon float64) ([]byte, error)
+}
+
 type OpenWeatherAPIClient struct {
 	BaseURL string
 	APIKey  string
@@ -54,7 +59,8 @@ func (c *OpenWeatherAPIClient) FetchLocation(city, state, country string) ([]byt
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("OpenWeatherMap API returned status %d", resp.StatusCode)
+		body, _ := io.ReadAll(resp.Body)
+		return nil, NewHTTPError(resp.StatusCode, string(body))
 	}
 
 	return io.ReadAll(resp.Body)
@@ -76,7 +82,8 @@ func (c *OpenWeatherAPIClient) FetchTemperature(lat, lon float64) ([]byte, error
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("OpenWeatherMap API returned status %d", resp.StatusCode)
+		body, _ := io.ReadAll(resp.Body)
+		return nil, NewHTTPError(resp.StatusCode, string(body))
 	}
 
 	return io.ReadAll(resp.Body)

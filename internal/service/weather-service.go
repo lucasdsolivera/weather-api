@@ -9,13 +9,17 @@ import (
 )
 
 type WeatherService struct {
-	Client *client.OpenWeatherAPIClient
+	Client client.WeatherAPI
+}
+
+func NewWeatherServiceWithClient(c client.WeatherAPI) *WeatherService {
+	return &WeatherService{
+		Client: c,
+	}
 }
 
 func NewWeatherService() *WeatherService {
-	return &WeatherService{
-		Client: client.NewAPIClient(),
-	}
+	return NewWeatherServiceWithClient(client.NewAPIClient())
 }
 
 func (s *WeatherService) GetTemperature(city, state, country string) ([]byte, error) {
